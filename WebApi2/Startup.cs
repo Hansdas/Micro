@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Micro.Core.Configure;
 using Micro.Core.Consul;
+using Micro.Core.EventBus;
+using Micro.Services.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,11 +14,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using ConfigurationProvider = Micro.Core.Configure.ConfigurationProvider;
 
 namespace WebApi3
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,12 +32,17 @@ namespace WebApi3
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddEventBus();
             services.AddConsul();
+            services.AddLogging();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var eventBus= app.ApplicationServices.GetRequiredService<IEventBus>();
+            eventBus.Subscribe<CreateUserEvent, IEventHandler<CreateUserEvent>>();
+            eventBus.Subscribe<UpdateUserEvent, IEventHandler<UpdateUserEvent>>();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

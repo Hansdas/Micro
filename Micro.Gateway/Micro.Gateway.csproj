@@ -14,5 +14,9 @@
     <PackageReference Include="Polly" Version="7.2.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Micro.Core\Micro.Core.csproj" />
+  </ItemGroup>
+
 
 </Project>

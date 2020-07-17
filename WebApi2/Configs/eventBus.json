@@ -1,0 +1,10 @@
+{
+  "EventBusOption": {
+    "MQProvider": "RabbitMQ",
+    "Host": "127.0.0.1",
+    "Port": "5672",
+    "Username": "admin",
+    "Password": "admin"
+  },
+  "EventHandler.DLL": "Micro.Services" //EventHandler实现类所在程序集
+}

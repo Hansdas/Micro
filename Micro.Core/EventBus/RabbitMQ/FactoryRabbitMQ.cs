@@ -11,13 +11,12 @@ namespace Micro.Core.EventBus.RabbitMQ
         private readonly IConnectionFactory connectionFactory;
         public FactoryRabbitMQ(EventBusOption eventBusOption)
         {
-            EventBusOption option = new EventBusOption();
             IConnectionFactory conFactory = new ConnectionFactory
             {
-                HostName = option.Host,
-                Port = option.Port,
-                UserName = option.Username,
-                Password = option.Password
+                HostName = eventBusOption.Host,
+                Port = eventBusOption.Port,
+                UserName = eventBusOption.Username,
+                Password = eventBusOption.Password
             };
             connectionFactory = conFactory;
         }
